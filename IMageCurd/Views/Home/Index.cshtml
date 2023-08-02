@@ -1,31 +1,107 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<IMageCurd.Models.employee>
+
+@{
+              
+
+                ViewBag.Title = "Index";
 }
+<style>
+    #main {
+        margin: 20px;
+        border: none;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    .imgbox {
+        margin: 10px;
+        height: 300px;
+        width: 500px;
+        border-radius: 20px;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+    .card-title{
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size:28px;
+        font-style:oblique;
+    }
+    .card-text {
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        font-style: oblique;
+    }
+</style>
+<h2 class="text-center">All Post Here</h2>
+@Html.Raw(TempData["CreateMessage"])
+@Html.Raw(TempData["UpdateMessage"])
+<hr />
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<p>
+
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.degisnation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image_path)
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.degisnation)
+            </td>
+            <td>
+                <img src="@Url.Content(item.image_path)" height="50" width="50" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+@foreach (var item in Model)
+{
+    <div class="card mb-8" id="main">
+        <div class="row g-0">
+            <div class="col-md-8">
+                <img src="@Url.Content(item.image_path)" class="img-fluid rounded-start imgbox"   />
+            </div>
+            <div class="col-md-4">
+                <div class="card-body">
+                    <h5 class="card-title">  @Html.DisplayFor(modelItem => item.name)</h5>
+                    <p class="card-text"> @Html.DisplayFor(modelItem => item.degisnation)</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary">
+
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-success" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-info" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                            
+
+                        </small></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+}
